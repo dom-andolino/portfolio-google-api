@@ -1,6 +1,7 @@
 # Scratchpad
 
 ## TODO 
+1. In Action workflow, handle case when no file changed (ie csv exactly the same)
 
 ## Resources
 
