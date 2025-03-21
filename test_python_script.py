@@ -1,6 +1,7 @@
 import os
 import requests
 import pandas as pd
+from datetime import datetime
 
 
 def get_query_results(query_str):
@@ -87,4 +88,9 @@ if __name__ == '__main__':
     output_df.drop_duplicates(subset='name', keep='first', inplace=True)
 
     #save results to csv
-    output_df.to_csv(output_path, index=False, encoding='utf-8', sep=',') 
+    output_df.to_csv(output_path, index=False, encoding='utf-8', sep=',')
+
+    #superbasic log of last run. Mainly to ensure always have a file to commit/push in event csv is identical to prior run
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open('logs/last_run.txt', 'w') as file:
+        file.write('Last Run: {ts}'.format(ts=ts))
