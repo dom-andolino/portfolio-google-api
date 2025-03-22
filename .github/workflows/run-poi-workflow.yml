@@ -2,9 +2,6 @@ name: run_py_test
 
 on: workflow_dispatch
 
-env:
-  DBT_PROFILES_DIR: ./person_of_influence
-  DBT_PROJECT_DIR: ./person_of_influence
 
 jobs:
   build:
