@@ -1,7 +1,6 @@
 # Scratchpad
 
 ## TODO 
-- Create some kind of aggregate table/model
 - Create some kind of visuals
     - Hosted on streamlit?
     - How does streamlit pull new data if we have GH action to update the duckdb
