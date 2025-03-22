@@ -1,7 +1,6 @@
 # Scratchpad
 
 ## TODO 
-- Merge staged data into hist table
 - Create some kind of aggregate table/model
 - Create some kind of visuals
     - Hosted on streamlit?
