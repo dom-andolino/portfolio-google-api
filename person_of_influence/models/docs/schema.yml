@@ -1,18 +1,8 @@
 models:
-  - name: model_1
+  - name: poi_test
     description: '{{ doc("thing1") }}'
     columns:
-      - name: id
+      - name: dt
         description: '{{ doc("thing1") }}'
         tests:
-          - unique
-          - not_null
-
-  - name: model_2
-    description: '{{ doc("thing2") }}'
-    columns:
-      - name: id
-        description: '{{ doc("thing2") }}'
-        tests:
-          - unique
           - not_null
