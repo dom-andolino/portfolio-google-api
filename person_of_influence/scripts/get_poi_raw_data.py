@@ -95,13 +95,42 @@ def stage_poi_raw_data():
         CREATE OR REPLACE TABLE poi_stage AS
             SELECT *
             FROM read_csv_auto(
-                'data/poi_raw_data.csv',
+                '{csv_path}',
                 normalize_names=True
             )
+    '''.format(csv_path=output_path)
+
+    with duckdb.connect(duckdb_path) as con:
+        con.sql(sql_query)
+
+
+def merge_into_poi_hist():
+    sql_query_ctine = '''
+        CREATE TABLE IF NOT EXISTS poi_hist (
+            name VARCHAR,
+            num_cats BIGINT,
+            best_cat_rnk BIGINT,
+            bst_cat VARCHAR,
+            dt DATE
+        )
     '''
 
-    with duckdb.connect('data/person_of_influence.db') as con:
-        con.sql(sql_query)
+    sql_query_del = '''
+        DELETE
+        FROM poi_hist
+        WHERE dt = (select max(dt) from poi_stage)
+    '''
+
+    sql_query_insrt = '''
+        INSERT INTO poi_hist
+        SELECT *
+        FROM poi_stage
+    '''
+
+    with duckdb.connect(duckdb_path) as con:
+        con.sql(sql_query_ctine)
+        con.sql(sql_query_del)
+        con.sql(sql_query_insrt)
 
 
 if __name__ == '__main__': 
@@ -109,16 +138,17 @@ if __name__ == '__main__':
     #init variables
     api_key = os.environ.get("GOOGLE_API_KEY")
     service_url = 'https://kgsearch.googleapis.com/v1/entities:search'
-    output_path = './data/poi_raw_data.csv'
-    
+    output_path = 'data/poi_raw_data.csv'
+    duckdb_path = 'data/person_of_influence.db'
 
     #get output_df and save results to csv
     output_df = get_output_df() 
     output_df.to_csv(output_path, index=False, encoding='utf-8', sep=',')
 
 
-    #stage poi_raw_data into duckdb
+    #stage poi_raw_data and merge into a hist table
     stage_poi_raw_data()
+    merge_into_poi_hist()
 
 
     #superbasic log of last run. Mainly to ensure always have a file to commit/push in event csv is identical to prior run

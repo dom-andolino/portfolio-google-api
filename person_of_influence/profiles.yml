@@ -2,5 +2,5 @@ person_of_influence:
   outputs:
    dev:
      type: duckdb
-     path: '../data/person_of_influence.db' #for github actions just use ./ instead of ../
+     path: '../data/person_of_influence.db'
   target: dev
