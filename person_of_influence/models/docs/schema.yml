@@ -1,3 +1,13 @@
+sources:
+  - name: person_of_influence
+    database: person_of_influence
+    schema: main
+    tables:
+      - name: poi_stage
+        description: Raw Person of Influence data from the most recent run.
+      - name: poi_hist
+        description: Raw Person of Influence data over history.
+
 models:
   - name: poi_test
     description: '{{ doc("thing1") }}'
@@ -6,3 +16,5 @@ models:
         description: '{{ doc("thing1") }}'
         tests:
           - not_null
+  - name: poi_top_curr
+    description: Top Persons of Influence from the most recent run
